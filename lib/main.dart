@@ -9,7 +9,7 @@ void main() {
   // runApp(const MaterialApp(home: Scaffold(Text('Hello World!'))));
   // runApp(const MaterialApp(home: Scaffold(body: Center(child: Text('Hello World!')))));
   runApp(
-    const MaterialApp(
+    MaterialApp(
       home: Scaffold(
           // backgroundColor: null,
           // backgroundColor: Colors.deepPurple, // Color je type, mozemo koristiti Color() ili Colors.neka_boja
@@ -17,14 +17,14 @@ void main() {
 
           // ! Premesticemo sve iz body: u poseban widget jer je vec nested. Za to moramo da kreiramo class-u
           body:
-          //? PRVO RESENJE (name argument)
+              //? PRVO RESENJE (name argument)
               // GradientContainer([
               //     Color.fromARGB(255, 195, 152, 242),
               //     Color.fromARGB(255, 249, 173, 193)
               // ]) // ovo poziva consturctor f-ju GradientContainer class-e. Mogu ovde const, ali mozda bolje ispred MAterialApp pa ne moram onda i ovde
-          //? DRUGO RESENJE (positional argument)
-            GradientContainer( Color.fromARGB(255, 195, 152, 242), Color.fromARGB(255, 249, 173, 193))
-          ),
+              //? DRUGO RESENJE (positional argument)
+              GradientContainer(Color.fromARGB(255, 195, 152, 242),
+                  Color.fromARGB(255, 249, 173, 193))),
     ),
   );
 }

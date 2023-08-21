@@ -72,7 +72,7 @@ class GradientContainer extends StatelessWidget {
   //? constructor fn
 //   const GradientContainer({key}) : super(key: key);
   // const GradientContainer({super.key});// position argument
-  const GradientContainer(this.color1, this.color2,
+  GradientContainer(this.color1, this.color2,
       {super.key}); //! positional argument su uvek required
 
 // i ovo postoji, dakle mozemo dodati multiple constructor fns istoj klasi
@@ -87,7 +87,13 @@ class GradientContainer extends StatelessWidget {
   final Color color1;
   final Color color2;
 
-  void rollDice() {}
+  var activeDiceImage = 'assets/images/dice-2.png';
+  // i posto imamo var, moramo obrisati const ispred GradientContainer, ne mzoemo vise kreirati konstantan object vise i da je cuvamo u reused memoriji, jer sad se objekat moze promeniti internally; putanja od activeDiceImage je dinamicka, dakle moze da se promeni. I onda i u main.dart brisemo const ispred MaterialApp jer ne mzoemo vise koristii kad je tu GradientContainer klasa
+
+  void rollDice() {
+    activeDiceImage = 'assets/images/dice-4.png';
+    print('Changing image ...');
+  }
 
   @override // is not technically required, ali je trebao bi da daodamo jer uikazuje da je overwridujemo metod koji je ocekivan by StatelessWidget
   Widget build(context) {
