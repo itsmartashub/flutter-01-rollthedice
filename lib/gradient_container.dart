@@ -28,7 +28,7 @@ const endAlignment = Alignment.bottomRight;
 //   const GradientContainer({super.key, required this.colors}); // name argument, alternativa za position argument. name arguments su optional, a posto nama ovaj colors ne treba da bude optional vec obavezan, dodajemo ispred required
 
 //   /*  ovaj key argument treba da bude prosledjen StatelessWidget f-ji. nakon dve tacke, tj : gde dohvatamo parent klasu koju nasledjujemo pisuci special keyword u Dartu, a to je super koja se executuje kao f-ja. Naime, super refers to the parent class (StatelessWidget in this case). Prvo key u super(key) se odnosi na StatelessWidget key, a drugo key u super(key: key) se odnosi na key ovde, koji prosledjujemo StatelessWidgetu. Ali posto se to mng x ponvlja, Flutter je omogucio da se to pise direkt u GradientContainer-u
-  
+
 //   Takodje, ovde ispred constructora koristimo const da bismo unlock-ovali rec "const" kada god negde u projectu pozivamo ovaj nas custom widget */
 
 //   final List<Color> colors; // ! i moramo da obrisemo const ispred BoxDecoration jer colors je lista, iako je final, a liste u Dartu difoltno ne mogu biti editovane. Dakle ne moze biti mutable iako je final
@@ -37,7 +37,6 @@ const endAlignment = Alignment.bottomRight;
 //   Widget build(context) {
 //     // build() must return as widget i zato dodajemo Widget ispred build() (returned value type). Takodje, build() mora da prihvati parametar context/ctx. build() ce da nadje tvoj widget (dakle ovaj GradientContainer) unutar nekog drugog widgeta ili ce biti prosledjen u runApp() f-ji
 //     // void znaci da vratimo nista. a build() treba da vraca widget. a to radimo sa return, i vraticemo ono sto hocemo da vratumo a i zelimo da vratimo widget. u nasem slucaju to ce biti sve sto je u body gore, dakle":
-    
 
 //     return Container(
 //       // BoxDecoration je object koji je takodje i type decoration, uff
@@ -67,14 +66,14 @@ const endAlignment = Alignment.bottomRight;
 //   }
 // }
 
-
 //@ ALTERNATIVA ZA COLORS
 // StatelessWidget je flutter class-a
 class GradientContainer extends StatelessWidget {
   //? constructor fn
 //   const GradientContainer({key}) : super(key: key);
   // const GradientContainer({super.key});// position argument
-  const GradientContainer(this.color1, this.color2, {super.key}); //! positional argument su uvek required
+  const GradientContainer(this.color1, this.color2,
+      {super.key}); //! positional argument su uvek required
 
 // i ovo postoji, dakle mozemo dodati multiple constructor fns istoj klasi
   // const GradientContainer.purple({super.key})
@@ -88,11 +87,12 @@ class GradientContainer extends StatelessWidget {
   final Color color1;
   final Color color2;
 
+  void rollDice() {}
+
   @override // is not technically required, ali je trebao bi da daodamo jer uikazuje da je overwridujemo metod koji je ocekivan by StatelessWidget
   Widget build(context) {
     // build() must return as widget i zato dodajemo Widget ispred build() (returned value type). Takodje, build() mora da prihvati parametar context/ctx. build() ce da nadje tvoj widget (dakle ovaj GradientContainer) unutar nekog drugog widgeta ili ce biti prosledjen u runApp() f-ji
     // void znaci da vratimo nista. a build() treba da vraca widget. a to radimo sa return, i vraticemo ono sto hocemo da vratumo a i zelimo da vratimo widget. u nasem slucaju to ce biti sve sto je u body gore, dakle":
-    
 
     return Container(
       // BoxDecoration je object koji je takodje i type decoration, uff
@@ -118,7 +118,22 @@ class GradientContainer extends StatelessWidget {
         //       fontWeight: FontWeight.bold),
         // ),
         // child: StyledText('Helloooo brooo'),
-        child: Image.asset('assets/images/dice-2.png', width: 200), //* posto koristimo Image, on je dynamic widget, a cim je dynamic ne moze da se garantuje da ce biti const, dakle moramo ga ukloniti iz Center
+        child: Column(
+          children: [
+            Image.asset('assets/images/dice-2.png',
+                width:
+                    200), //* posto koristimo Image, on je dynamic widget, a cim je dynamic ne moze da se garantuje da ce biti const, dakle moramo ga ukloniti iz Center
+            /*     
+            ``` ElevatedButton(onPressed: onPressed, child: child) // za dugme koje ima bg color i blagu senku
+            ``` OutlinedButton(onPressed: onPressed, child: child) // dugme koje nema bg color vec samo border
+            ``` TextButton(onPressed: onPressed, child: child) // dugme koje je ustv samo pressible text, tj text na koje moze da se klikne */
+            TextButton(onPressed: rollDice, child: Text('Roll Dice'))
+            /* - child argument je jednostavniji, on samo zeli drugi widget koji ce biti wrapovan unutar ovog dugmeta, i tipicno to je Text() widget koji sadrzi text jelte.
+            - onPressed argument je funkcija (ili null kao value) koja ce se izvrsiti kada se dugme klikne.
+            U Dartu, funkcije su takodje objekti.
+            - I sad tu mozemo koristiti anonymus fn (){...} tj direkt tu da je pisemo, a mozemo i da kreiramo metod negde gore tipa nakon sto smo definisali final Color, rollDice() koja bi trebalo da bude void, jer se na click ne vraca nista. I onda za vrednost onPressed pisemo ime tog metoda, ali ne i zxagrade, dakle ne executujemo ga tu */
+          ],
+        ), //* Colument je ako ce imati u nejmu dva elementa koja su vertikalno postavljeni (jedan ispod drugog)
       ),
     );
   }
