@@ -9,7 +9,7 @@ void main() {
   // runApp(const MaterialApp(home: Scaffold(Text('Hello World!'))));
   // runApp(const MaterialApp(home: Scaffold(body: Center(child: Text('Hello World!')))));
   runApp(
-    MaterialApp(
+    const MaterialApp(
       home: Scaffold(
           // backgroundColor: null,
           // backgroundColor: Colors.deepPurple, // Color je type, mozemo koristiti Color() ili Colors.neka_boja
@@ -28,7 +28,6 @@ void main() {
     ),
   );
 }
-
 
 
 /*
