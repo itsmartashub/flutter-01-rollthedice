@@ -76,6 +76,11 @@ class GradientContainer extends StatelessWidget {
   // const GradientContainer({super.key});// position argument
   const GradientContainer(this.color1, this.color2, {super.key}); //! positional argument su uvek required
 
+// i ovo postoji, dakle mozemo dodati multiple constructor fns istoj klasi
+  // const GradientContainer.purple({super.key})
+  //   : color1 = Color.fromARGB(255, 195, 152, 242),
+  //     color2 = Color.fromARGB(255, 249, 173, 193);
+
   /*  ovaj key argument treba da bude prosledjen StatelessWidget f-ji. nakon dve tacke, tj : gde dohvatamo parent klasu koju nasledjujemo pisuci special keyword u Dartu, a to je super koja se executuje kao f-ja. Naime, super refers to the parent class (StatelessWidget in this case). Prvo key u super(key) se odnosi na StatelessWidget key, a drugo key u super(key: key) se odnosi na key ovde, koji prosledjujemo StatelessWidgetu. Ali posto se to mng x ponvlja, Flutter je omogucio da se to pise direkt u GradientContainer-u
   
   Takodje, ovde ispred constructora koristimo const da bismo unlock-ovali rec "const" kada god negde u projectu pozivamo ovaj nas custom widget */
@@ -102,7 +107,8 @@ class GradientContainer extends StatelessWidget {
               colors: [color1, color2],
               begin: startAlignment,
               end: endAlignment)),
-      child: const Center(
+      // child: const Center(
+      child: Center(
         // child: Text('Hello World!'),
         // child: Text(
         //   'Hello World!',
@@ -111,7 +117,8 @@ class GradientContainer extends StatelessWidget {
         //       fontSize: 28,
         //       fontWeight: FontWeight.bold),
         // ),
-        child: StyledText('Helloooo brooo'),
+        // child: StyledText('Helloooo brooo'),
+        child: Image.asset('assets/images/dice-2.png', width: 200), //* posto koristimo Image, on je dynamic widget, a cim je dynamic ne moze da se garantuje da ce biti const, dakle moramo ga ukloniti iz Center
       ),
     );
   }
