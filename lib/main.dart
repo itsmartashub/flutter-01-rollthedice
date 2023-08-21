@@ -17,7 +17,13 @@ void main() {
 
           // ! Premesticemo sve iz body: u poseban widget jer je vec nested. Za to moramo da kreiramo class-u
           body:
-              GradientContainer() // ovo poziva consturctor f-ju GradientContainer class-e. Mogu ovde const, ali mozda bolje ispred MAterialApp pa ne moram onda i ovde
+          //? PRVO RESENJE (name argument)
+              // GradientContainer([
+              //     Color.fromARGB(255, 195, 152, 242),
+              //     Color.fromARGB(255, 249, 173, 193)
+              // ]) // ovo poziva consturctor f-ju GradientContainer class-e. Mogu ovde const, ali mozda bolje ispred MAterialApp pa ne moram onda i ovde
+          //? DRUGO RESENJE (positional argument)
+            GradientContainer( Color.fromARGB(255, 195, 152, 242), Color.fromARGB(255, 249, 173, 193))
           ),
     ),
   );
