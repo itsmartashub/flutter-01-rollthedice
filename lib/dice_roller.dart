@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:math'; // ovo nije third-party package koji bi se morao registrovati u pubspec.yaml, vec je ovo iz dart-a direkt, ali ne defaultno dostupno svugde vec se mora importovati
+
+final randomizer = Random();
+// bolje za performanse, ne zauzimamo memoriju uredjaja bzvz
 
 //? I KLASA
 class DiceRoller extends StatefulWidget {
@@ -21,14 +25,25 @@ class DiceRoller extends StatefulWidget {
 
 //? II KLASA - donja crtica govori Dartu da ce ova klasa biti PRIVATE, dakle koristice se samo u ovom file, iako importujemo ovaj file u neki drugi file, taj drugi file nece moci da pristupi ovoj state klasi ovde
 class _DiceRollerState extends State<DiceRoller> {
-  var activeDiceImage = 'assets/images/dice-2.png';
+  // var activeDiceImage = 'assets/images/dice-2.png';
+  // var currentDiceRoll = Random().nextInt(6) + 1;
+  var currentDiceRoll = 2;
+  /*  final randomizer = Random();
+  // bolje za performanse, ne zauzimamo memoriju uredjaja bzvz */
 
   void rollDice() {
+    /* nextInt() sluzi da se generise random integer. On zeli input, ima argument koji predtsvalja max broj koji sme da se generise, osim sto ce se ta vrednost excludovati; Naime, ako stavi u nextInt(10), generisace se random br koji je jednak ili vec od 0 i MANJI od 10
+    - Ali mi cemo prepraviti to sad dodavanjem + 1 */
+    // var diceRoll = Random().nextInt(6) + 1;
+
     /* 
     @ JAKO BITNA FN ZA DINAMICKO MENJANJE SADRZAJA. Re-executuje build() sto je neophodno za apdejtovanje UI-a. setState() se nalazi u State klasi. Ovom metodu se mora proslediti fn, i obicno je to anonymus fn. I unutar nje stavljamo ono sto zelimo da apdejtujemo
     Dakle setState govori Flutteru da re-execuduje build() fn ove DiceRolleState klase, i posto executuje build, ocekuje se da se UI promeni */
     setState(() {
-      activeDiceImage = 'assets/images/dice-4.png';
+      /* ! ovo bas i nije preporucljivo ovako jer svaki x kada se rollDice izvrsi, dakle svaki x kada kliknemo Roll Dice btn, novi Random object se kreira i cuva u memoriji uredjaja gde je pokrenuta app. A stari, prethodno kreirani Random objekat ce se odbaciti. Mislim srecom da ce biti odbacen jer onda necemo cuvati SVAKI prethodno kreirani obj u memoriji i bzvz zauzimati istu.
+      Zato cemo cut-ovati ovaj Random() objekat izvan ove rollDice() fn u posebnu final variable randomizer. cak ne mora da bude u ovoj klasi ta promenljiva vec skroz tamo gore negde ispod importa */
+      currentDiceRoll = randomizer.nextInt(6) + 1;
+      // activeDiceImage = 'assets/images/dice-$diceRoll.png';
     });
 
     // activeDiceImage = 'assets/images/dice-4.png';
@@ -43,7 +58,8 @@ class _DiceRollerState extends State<DiceRoller> {
       // MainAxisSize | MainAxisSize.min | MainAxisSize.max. Ima tri vrednosti, difoltna je MainAxisSize, sto znaci da zauzima citav dostupan height. Mi zelimo MainAxisSize.min
 
       children: [
-        Image.asset(activeDiceImage, width: 200),
+        // Image.asset(activeDiceImage, width: 200),
+        Image.asset('assets/images/dice-$currentDiceRoll.png', width: 200),
         //* posto koristimo Image, on je dynamic widget, a cim je dynamic ne moze da se garantuje da ce biti const, dakle moramo ga ukloniti iz Center
         /* - ElevatedButton(onPressed: onPressed, child: child) // za dugme koje ima bg color i blagu senku
         - OutlinedButton(onPressed: onPressed, child: child) // dugme koje nema bg color vec samo border
