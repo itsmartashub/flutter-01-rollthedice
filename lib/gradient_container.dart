@@ -118,7 +118,10 @@ class GradientContainer extends StatelessWidget {
         //       fontWeight: FontWeight.bold),
         // ),
         // child: StyledText('Helloooo brooo'),
+        /* * Column je ako ce imati u nejmu dva elementa koja su vertikalno postavljeni (jedan ispod drugog). Inace, Column zauzima citav vertikalan height, a da bismo centrirali vertikalno moramo da promenimo to da je on full height. Tu ce nam pomoci mainAxisSize */
         child: Column(
+          mainAxisSize: MainAxisSize
+              .min, // MainAxisSize | MainAxisSize.min | MainAxisSize.max. Ima tri vrednosti, difoltna je MainAxisSize, sto znaci da zauzima citav dostupan height. Mi zelimo MainAxisSize.min
           children: [
             Image.asset('assets/images/dice-2.png',
                 width:
@@ -127,13 +130,25 @@ class GradientContainer extends StatelessWidget {
             ``` ElevatedButton(onPressed: onPressed, child: child) // za dugme koje ima bg color i blagu senku
             ``` OutlinedButton(onPressed: onPressed, child: child) // dugme koje nema bg color vec samo border
             ``` TextButton(onPressed: onPressed, child: child) // dugme koje je ustv samo pressible text, tj text na koje moze da se klikne */
-            TextButton(onPressed: rollDice, child: Text('Roll Dice'))
+            const SizedBox(height: 20),
+            TextButton(
+                onPressed: rollDice,
+                style: TextButton.styleFrom(
+                    /* EdgeInsets.all(value) je space u svim stranama , ili EdgeInsets.only(top: value) za samo top padding. Elem, umesto ovog sa paddingom, da bismo dodali space izmedju slike u dugmeta mozemo koristiti i SizedBox(height: value) widget gore ispod Image.asset. Ali njime kao da dodajemo neki widget te visine, koji zapravo ne vidimo jer se u njemu ne nalazi nista, ali zauzima tu visinu koju smo definisali.
+                    
+                    To je ujedno i bitna razlika izmedju SizedBox i drugih widgeta, recimo Container, etc, koji zauzimaju height i width koliki im treba da bi fitovali sadrzaj unutar sebe. Recimo TExt widget je visok i sirok koliko god je potrebno da bi prikazao zadati text */
+                    // padding: const EdgeInsets.only(top: 20),
+                    foregroundColor: Colors.white,
+                    textStyle: const TextStyle(fontSize: 28)),
+                child: const Text('Roll Dice'))
             /* - child argument je jednostavniji, on samo zeli drugi widget koji ce biti wrapovan unutar ovog dugmeta, i tipicno to je Text() widget koji sadrzi text jelte.
             - onPressed argument je funkcija (ili null kao value) koja ce se izvrsiti kada se dugme klikne.
             U Dartu, funkcije su takodje objekti.
-            - I sad tu mozemo koristiti anonymus fn (){...} tj direkt tu da je pisemo, a mozemo i da kreiramo metod negde gore tipa nakon sto smo definisali final Color, rollDice() koja bi trebalo da bude void, jer se na click ne vraca nista. I onda za vrednost onPressed pisemo ime tog metoda, ali ne i zxagrade, dakle ne executujemo ga tu */
+            - I sad tu mozemo koristiti anonymus fn (){...} tj direkt tu da je pisemo, a mozemo i da kreiramo metod negde gore tipa nakon sto smo definisali final Color, rollDice() koja bi trebalo da bude void, jer se na click ne vraca nista. I onda za vrednost onPressed pisemo ime tog metoda, ali ne i zxagrade, dakle ne executujemo ga tu.
+            
+            - mozemo dodati style argument, i pozeljno je da widget tj child argument bude poslednji */
           ],
-        ), //* Colument je ako ce imati u nejmu dva elementa koja su vertikalno postavljeni (jedan ispod drugog)
+        ),
       ),
     );
   }
